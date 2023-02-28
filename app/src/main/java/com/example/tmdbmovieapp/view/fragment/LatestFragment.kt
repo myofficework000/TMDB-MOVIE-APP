@@ -14,6 +14,8 @@ import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import com.example.tmdbmovieapp.viewmodel.createFactory
 
 class LatestFragment : Fragment() {
+   private lateinit var binding: FragmentLatestBinding
+
     private val viewModel by lazy {
         requireActivity().run {
             ViewModelProvider(
@@ -25,14 +27,20 @@ class LatestFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = DataBindingUtil.inflate<FragmentLatestBinding>(
-        inflater, R.layout.fragment_latest, container, false
-    ).apply {
-        vm = viewModel
-    }.root
+    ): View{
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_latest, container, false)
+        return binding.root
+    }
 
     override fun onResume() {
         super.onResume()
         viewModel.getLatestMovies()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.latestMovie.observe(this.viewLifecycleOwner){
+            binding.data = it
+        }
     }
 }

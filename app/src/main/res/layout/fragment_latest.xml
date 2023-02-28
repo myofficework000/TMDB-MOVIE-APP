@@ -4,20 +4,25 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.example.tmdbmovieapp.viewmodel.MovieListViewModel" />
+            name="data"
+            type="com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieResponse" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#283593"
         tools:context=".view.fragment.LatestFragment">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text='@{vm.latestMovie.title}' />
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            android:textSize="40sp"
+            android:text='@{data.originalTitle}'
+            tools:text="hiiiii"/>
 
     </FrameLayout>
 </layout>
