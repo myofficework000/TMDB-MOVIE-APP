@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.remote.data.Movie
 
 class Repository(
-    val localRepository: LocalRepository,
-    private val remoteRepository: RemoteRepository,
-    override val searchedNews: MutableLiveData<List<Movie>>
+    private val localRepository: LocalRepository,
+    private val remoteRepository: RemoteRepository
 ) : IRepository {
     override fun getLatestMovie() = remoteRepository.getLatestMovie()
 
+    override val searchedNews = MutableLiveData<List<Movie>>()
     override val isProcessing = MutableLiveData<Boolean>()
-
 }
