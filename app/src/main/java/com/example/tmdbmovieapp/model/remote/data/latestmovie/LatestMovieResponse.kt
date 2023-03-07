@@ -3,6 +3,7 @@ package com.example.tmdbmovieapp.model.remote.data.latestmovie
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.tmdbmovieapp.model.local.data.MovieGenre
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "LatestMovie")
@@ -11,7 +12,7 @@ data class LatestMovieResponse(
     @PrimaryKey
     val id: Int,
     @SerializedName("genres")
-    val genres: List<MovieGenres>,
+    val genres: List<MovieGenre>,
     @SerializedName("homepage")
     val homepage: String,
     @SerializedName("original_language")

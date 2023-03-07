@@ -1,11 +1,14 @@
 package com.example.tmdbmovieapp.model.repository
 
 import com.example.tmdbmovieapp.model.local.AppDatabase
-import com.example.tmdbmovieapp.model.remote.data.Movie
+import com.example.tmdbmovieapp.model.local.data.Movie
+import com.example.tmdbmovieapp.model.local.data.MovieDetail
 
 class LocalRepository(private val appDatabase: AppDatabase) {
 
-    fun getLatestMovie() = appDatabase.getMovieDao().getNews()
+    fun getLatestMovie() = appDatabase.getMovieDao().getLatestMovie()
+    fun saveLatestMovie(movie: Movie) = appDatabase.getMovieDao().saveLatestMovie(movie)
 
-    fun saveNews(movie: List<Movie>) = appDatabase.getMovieDao().saveNews(movie)
+    fun saveMovieDetail(data: List<MovieDetail>) = appDatabase.getMovieDao().saveMovieDetail(data)
+    fun getMovieDetailById(movieId: Int) = appDatabase.getMovieDao().getMovieDetailById(movieId)
 }
