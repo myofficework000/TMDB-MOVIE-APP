@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="data"
-            type="com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieResponse" />
+            name="vm"
+            type="com.example.tmdbmovieapp.viewmodel.MovieListViewModel" />
     </data>
 
     <FrameLayout
@@ -21,8 +21,8 @@
             android:textColor="@color/white"
             android:textStyle="italic"
             android:textSize="40sp"
-            android:text='@{data.originalTitle}'
-            tools:text="hiiiii"/>
+            android:text='@{vm.latestMovie.title}'
+            tools:text="N/A"/>
 
     </FrameLayout>
 </layout>
