@@ -10,4 +10,5 @@ class RemoteRepository(
     private val apiLatestMovie: ApiLatestMovie = RetrofitBuilder.instanceLatestMovie
 ) {
     fun getLatestMovie() = apiLatestMovie.getLatestMovie()
+    fun getMovieDetail(movieId: Int) = apiService.getMovieDetail(movieId)
 }

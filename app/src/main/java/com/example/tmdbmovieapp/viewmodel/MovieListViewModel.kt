@@ -1,10 +1,13 @@
 package com.example.tmdbmovieapp.viewmodel
 
 import android.app.Application
+import androidx.databinding.Observable
+import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.local.AppDatabase
+import com.example.tmdbmovieapp.model.remote.data.MovieResponse
 import com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieResponse
 import com.example.tmdbmovieapp.model.repository.LocalRepository
 import com.example.tmdbmovieapp.model.repository.RemoteRepository
@@ -16,12 +19,10 @@ import retrofit2.Response
 class MovieListViewModel(
     application: Application,
     private val db: AppDatabase = AppDatabase.getInstance(application),
-    private val localRepository: LocalRepository = LocalRepository(db),
-    private val remoteRepository: RemoteRepository = RemoteRepository(),
-    private val repository: Repository = Repository(localRepository, remoteRepository)
-) : AndroidViewModel(application) {
-    private val _latestMovie = MutableLiveData<LatestMovieResponse>()
-    val latestMovie: LiveData<LatestMovieResponse> get() = _latestMovie
+    private val repository: Repository = Repository(db)
+) : AndroidViewModel(application), Observable {
+    val latestMovie = repository.latestMovie
+    val movieDetail = repository.movieDetail
 
     fun getTopRatedMovies() {
 
@@ -35,14 +36,19 @@ class MovieListViewModel(
 
     }
 
-    fun getLatestMovies() {
-        repository.getLatestMovie().enqueue(object : Callback<LatestMovieResponse>{
-            override fun onResponse(
-                call: Call<LatestMovieResponse>,
-                response: Response<LatestMovieResponse>
-            ) { response.body()?.let { _latestMovie.value = it } }
+    fun getLatestMovies() = latestMovie.also { repository.getLatestMovie() }
 
-            override fun onFailure(call: Call<LatestMovieResponse>, t: Throwable) {}
-        })
+    fun getMovieDetail(movieId: Int) = movieDetail.also { repository.getMovieDetail(movieId) }
+
+    private val callbacks: PropertyChangeRegistry = PropertyChangeRegistry()
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+        callbacks.add(callback)
+    }
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+        callbacks.remove(callback)
+    }
+
+    fun notifyChange() {
+        callbacks.notifyCallbacks(this, 0, null)
     }
 }

@@ -12,4 +12,13 @@ object Constant {
     const val END_POINT_POPULAR_MOVIES = "" // LUAN
     const val END_POINT_UPCOMING_MOVIES = "" // ALex
     const val END_POINT_TOP_RATED_MOVIES = "" // Thomas
+    const val END_POINT_MOVIE_DETAIL = "movie/{movie_id}"
+    const val END_POINT_MOVIE_DETAIL_ARG_1 = "movie_id"
+
+    const val TABLE_MOVIE = "movie"
+    const val TABLE_MOVIE_DETAIL = "movieDetail"
+    const val TABLE_MOVIE_GENRE = "movieGenre"
+    const val TABLE_PRODUCTION_COMPANY = "productionCompany"
+    const val TABLE_PRODUCTION_COUNTRY = "productionCountry"
+    const val TABLE_SPOKEN_LANGUAGE = "spokenLanguage"
 }

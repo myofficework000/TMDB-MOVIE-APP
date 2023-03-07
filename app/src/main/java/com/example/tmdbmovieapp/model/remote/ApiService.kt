@@ -1,5 +1,6 @@
 package com.example.tmdbmovieapp.model.remote
 
+import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,4 +18,9 @@ interface ApiService {
         @Query("country") country: String? = null,
         @Query("language") language: String? = null
     ): Call<NewsResponse>*/
+
+    @GET(Constant.END_POINT_MOVIE_DETAIL)
+    fun getMovieDetail(
+        @Path(Constant.END_POINT_MOVIE_DETAIL_ARG_1) movieId: Int
+    ): Call<MovieDetailResponse>
 }
