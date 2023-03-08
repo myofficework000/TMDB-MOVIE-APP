@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.tmdbmovieapp.model.local.data.*
 import com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieResponse
+import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 
 @Database(entities = [
     Movie::class,
@@ -15,10 +16,12 @@ import com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieRespons
     ProductionCountry::class,
     SpokenLanguage::class
                      ], version = 1, exportSchema = false)
+
 @androidx.room.TypeConverters(TypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getMovieDao(): MovieDao
+    abstract fun getUpComingMovieDao(): UpcomingMoiveDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

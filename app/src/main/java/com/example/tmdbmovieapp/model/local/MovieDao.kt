@@ -36,4 +36,7 @@ interface MovieDao {
     fun saveSpokenLanguage(data: List<SpokenLanguage>)
     @Query("select * from ${Constant.TABLE_SPOKEN_LANGUAGE} where iso6391 = :languageIso")
     fun getSpokenLanguageById(languageIso: Int): List<SpokenLanguage>
+    @Query("SELECT * FROM Movie")
+    fun getNews(): LiveData<List<Movie>>
+
 }

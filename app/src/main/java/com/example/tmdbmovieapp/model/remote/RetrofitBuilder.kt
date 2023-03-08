@@ -3,6 +3,7 @@ package com.example.tmdbmovieapp.model.remote
 import com.example.tmdbmovieapp.model.remote.Constant.BASE_URL
 import com.example.tmdbmovieapp.model.remote.Constant.TOKEN_JOSH
 import com.example.tmdbmovieapp.model.remote.data.ApiLatestMovie
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

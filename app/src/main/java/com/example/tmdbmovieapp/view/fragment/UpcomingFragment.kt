@@ -4,15 +4,59 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
+import com.example.tmdbmovieapp.databinding.FragmentLatestBinding
+import com.example.tmdbmovieapp.databinding.FragmentUpcomingBinding
+import com.example.tmdbmovieapp.model.local.AppDatabase
+import com.example.tmdbmovieapp.model.local.UpcomingMoiveDao
+import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
+import com.example.tmdbmovieapp.view.adapters.UpcomingRVAdapter
+import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
+import com.example.tmdbmovieapp.viewmodel.createFactory
 
 class UpcomingFragment : Fragment() {
+    private lateinit var binding: FragmentUpcomingBinding
+    private lateinit var db: AppDatabase
+    private lateinit var movieDao: UpcomingMoiveDao
+    private lateinit var rvAdapter: UpcomingRVAdapter
+    private lateinit var movieList: List<UpcomingResponse>
+
+    private val viewModel by lazy {
+        requireActivity().run {
+            ViewModelProvider(
+                requireActivity(), MovieListViewModel(application).createFactory()
+            )[MovieListViewModel::class.java]
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_upcoming, container, false)
+    ): View = DataBindingUtil.inflate<FragmentUpcomingBinding>(
+        inflater, R.layout.fragment_upcoming, container, false
+    ).apply {
+        binding = this
+        binding.rvUpMovies.layoutManager = LinearLayoutManager(context)
+
+    }.root
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.upComingMovies.observe(viewLifecycleOwner) {
+            if (it == null) return@observe
+            binding.rvUpMovies.adapter = UpcomingRVAdapter(it)
+        }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUpcomingMovies()
+    }
+
 }
