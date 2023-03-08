@@ -4,13 +4,9 @@ import android.app.Application
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.local.AppDatabase
-import com.example.tmdbmovieapp.model.remote.data.MovieResponse
-import com.example.tmdbmovieapp.model.remote.data.latestmovie.LatestMovieResponse
-import com.example.tmdbmovieapp.model.repository.LocalRepository
-import com.example.tmdbmovieapp.model.repository.RemoteRepository
+import com.example.tmdbmovieapp.model.local.data.Movie
+import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import com.example.tmdbmovieapp.model.repository.Repository
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +20,7 @@ class MovieListViewModel(
     val latestMovie = repository.latestMovie
     val movieDetail = repository.movieDetail
 
+    val upComingMovies = repository.upComingmovie
     fun getTopRatedMovies() {
 
     }
@@ -32,9 +29,7 @@ class MovieListViewModel(
 
     }
 
-    fun getUpcomingMovies() {
-
-    }
+    fun getUpcomingMovies() = upComingMovies.also { repository.getUpComingMovie() }
 
     fun getLatestMovies() = latestMovie.also { repository.getLatestMovie() }
 

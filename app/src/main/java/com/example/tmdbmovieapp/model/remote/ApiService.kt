@@ -1,6 +1,9 @@
 package com.example.tmdbmovieapp.model.remote
 
 import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
+import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_UPCOMING_MOVIES
+import com.example.tmdbmovieapp.model.remote.data.MovieResponse
+import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -23,4 +26,12 @@ interface ApiService {
     fun getMovieDetail(
         @Path(Constant.END_POINT_MOVIE_DETAIL_ARG_1) movieId: Int
     ): Call<MovieDetailResponse>
+    @GET(END_POINT_UPCOMING_MOVIES)
+    fun getUpComingMovies(
+        @Query("country") country : String? = null,
+        @Query("page") page : Int? = null
+    ): Call<UpcomingResponse>
+
+
+
 }

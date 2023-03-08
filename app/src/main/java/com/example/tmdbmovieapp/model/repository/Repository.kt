@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
 import com.example.tmdbmovieapp.model.remote.data.MovieResponse
+import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +18,7 @@ class Repository(
     private val _latestMovie = MutableLiveData<MovieResponse>()
     val latestMovie: LiveData<MovieResponse> get() = _latestMovie
     val movieDetail = localRepository.getMovieDetailById(-1)
+    val upComingmovie = localRepository.getUpComingMovies()
 
     override fun getMovieDetail(movieId: Int) {
         remoteRepository.getMovieDetail(movieId).enqueue(object : Callback<MovieDetailResponse> {
@@ -45,4 +47,28 @@ class Repository(
         })
     }
     override val isProcessing = MutableLiveData<Boolean>()
+
+    //override fun getUpComingMovie() = remoteRepository.loadUpcomingMovies()
+    override fun getUpComingMovie() {
+        remoteRepository.loadUpcomingMovies().enqueue(object : Callback<UpcomingResponse> {
+            override fun onResponse(
+                call: Call<UpcomingResponse>,
+                response: Response<UpcomingResponse>
+            ) {
+                response.body()?.let {
+                    localRepository.saveUpComingMovies(
+                        (it.results.map{
+                            result -> result.toLocal(true)
+                        })
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<UpcomingResponse>, t: Throwable) {}
+        })
+    }
+
+
+    
+
 }
