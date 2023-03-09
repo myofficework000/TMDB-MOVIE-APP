@@ -25,6 +25,7 @@ class UpcomingRVAdapter(private val movieList: List<Movie>) : RecyclerView.Adapt
 
     inner class UpcomingViewHolder(binding: UpcomingMovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie:Movie) {
+            if (this@UpcomingRVAdapter::upcomingMovieItemBinding.isInitialized)
             upcomingMovieItemBinding.movie = movie
         }
     }

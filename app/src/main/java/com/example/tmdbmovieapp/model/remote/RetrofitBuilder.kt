@@ -1,6 +1,7 @@
 package com.example.tmdbmovieapp.model.remote
 
 import com.example.tmdbmovieapp.model.remote.Constant.BASE_URL
+import com.example.tmdbmovieapp.model.remote.Constant.TOKEN_ALEX
 import com.example.tmdbmovieapp.model.remote.Constant.TOKEN_JOSH
 import com.example.tmdbmovieapp.model.remote.data.ApiLatestMovie
 import com.google.gson.Gson
@@ -17,7 +18,7 @@ object RetrofitBuilder {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    fun getRetrofit(): Retrofit {
+    fun getRetrofit(apiKey: String): Retrofit {
         if (!this::retrofit.isInitialized) {
 
             val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -25,7 +26,7 @@ object RetrofitBuilder {
             }
 
             val client = OkHttpClient.Builder()
-                .addInterceptor(AuthInterceptor())
+                .addInterceptor(OkHttpInterceptors.APIKey(apiKey))
                 .addInterceptor(loggingInterceptor)
                 .build()
 
@@ -47,7 +48,8 @@ object RetrofitBuilder {
                 OkHttpClient.Builder()
                     .addInterceptor(OkHttpInterceptors.APIKey(TOKEN_JOSH))
                     .addInterceptor(loggingInterceptor)
-                    .build() )
+                    .build()
+            )
             .build()
             .create(ApiLatestMovie::class.java)
     }
