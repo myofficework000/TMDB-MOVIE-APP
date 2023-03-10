@@ -7,7 +7,6 @@ import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.remote.data.MovieResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class Repository(
@@ -20,6 +19,7 @@ class Repository(
     val movieDetail = localRepository.getMovieDetailById(-1)
     val upComingMovie = localRepository.getUpComingMovies()
     val topRatedMovie = localRepository.getTopRatedMovies()
+    val searchedMovies = localRepository.getSearchMovies()
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun getMovieDetail(movieId: Int) {
@@ -61,7 +61,7 @@ class Repository(
             .subscribe({ res ->
                 localRepository.saveUpComingMovies(
                     (res.results.map { result ->
-                        result.toLocal(isUpcoming = true, isTopRated = false)
+                        result.toLocal(isUpcoming = true, isTopRated = false, isSearch = false)
                     })
                 )
             }, {
@@ -80,7 +80,7 @@ class Repository(
             .subscribe({ res ->
                 localRepository.saveTopRatedMovies(
                     (res.results.map { result ->
-                        result.toLocal(isUpcoming = false, isTopRated = true)
+                        result.toLocal(isUpcoming = false, isTopRated = true, isSearch = false)
                     })
                 )
             }, {
@@ -91,5 +91,22 @@ class Repository(
         compositeDisposable.add(disposable)
     }
 
+    override fun searchMovie(movieName: String) {
+        val disposable = remoteRepository.searchMovie(movieName)
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                localRepository.saveAsSearchMovies(
+                    (res.results.map { result ->
+                        result.toLocal(isUpcoming = false, isTopRated = false, isSearch = true)
+                    })
+                )
+            }, {
+                Log.i("error", it.message.toString())
+            }
+            )
+
+        compositeDisposable.add(disposable)
+    }
 
 }

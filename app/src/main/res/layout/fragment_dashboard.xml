@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.DashboardFragment">
 
     <data>
@@ -9,22 +9,40 @@
             name="dashboardFragment"
             type="com.example.tmdbmovieapp.view.fragment.DashboardFragment" />
     </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearchResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutTabs"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/dashboardViewPager"
+            fragment="@{dashboardFragment}"
+            setupWithTab="@{tabLayout}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            setupWithTab="@{tabLayout}"
-            fragment="@{dashboardFragment}"/>
+            android:layout_weight="1" />
     </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

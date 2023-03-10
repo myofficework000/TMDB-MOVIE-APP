@@ -10,4 +10,6 @@ interface IRepository {
     fun getUpComingMovie()
     fun getTopRatedMovie()
 
+    fun searchMovie(movieName: String)
+
 }

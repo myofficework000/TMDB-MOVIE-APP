@@ -7,10 +7,13 @@ import com.example.tmdbmovieapp.model.remote.data.ApiLatestMovie
 import retrofit2.create
 
 class RemoteRepository(
-    private val apiService: ApiService =  RetrofitBuilder.instanceLatestMovie) {
+    private val apiService: ApiService = RetrofitBuilder.instanceLatestMovie
+) {
     fun getLatestMovie() = apiService.getLatestMovie()
     fun getMovieDetail(movieId: Int) = apiService.getMovieDetail(movieId)
     fun loadUpcomingMovies() = apiService.getUpComingMovies()
 
     fun loadTopRatedMovies() = apiService.getTopRatedMovies()
+
+    fun searchMovie(searchText: String) = apiService.getMovieSearch(searchText)
 }

@@ -35,7 +35,7 @@ data class MovieResponse(
     val voteAverage: Double
 
 ) {
-    fun toLocal(isUpcoming: Boolean = false, isTopRated: Boolean = false) = Movie(
+    fun toLocal(isUpcoming: Boolean = false, isTopRated: Boolean = false, isSearch:Boolean) = Movie(
         adult = adult,
         backdropPath = backdropPath,
         genreIds = genreIds ?: listOf(),
