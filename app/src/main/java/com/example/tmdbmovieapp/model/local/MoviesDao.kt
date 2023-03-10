@@ -2,6 +2,7 @@ package com.example.tmdbmovieapp.model.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -23,4 +24,6 @@ interface MoviesDao {
     @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isSearched = 1")
     fun getSearchedMovies(): LiveData<List<Movie>>
 
+    @Query("DELETE FROM MOVIE where id IN (:ids)")
+    fun deleteSearchedMovies(ids: LongArray)   // Todo work
 }

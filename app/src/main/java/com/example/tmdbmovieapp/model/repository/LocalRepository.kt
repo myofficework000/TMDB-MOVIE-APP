@@ -22,4 +22,6 @@ class LocalRepository(private val appDatabase: AppDatabase) {
     fun getSearchMovies() = appDatabase.getMoviesDao().getSearchedMovies()
 
     fun saveAsSearchMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
+
+    fun deleteSearchedMovies(ids: LongArray) = appDatabase.getMoviesDao().deleteSearchedMovies(ids)
 }

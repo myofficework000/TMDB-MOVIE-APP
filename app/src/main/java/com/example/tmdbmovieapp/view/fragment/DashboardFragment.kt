@@ -96,7 +96,6 @@ class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
     }
 
     override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-
         binding.recyclerViewSearchResult.visibility = View.VISIBLE
         binding.layoutTabs.visibility = View.GONE
         return true
@@ -105,7 +104,6 @@ class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
     override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
         binding.recyclerViewSearchResult.visibility = View.GONE
         binding.layoutTabs.visibility = View.VISIBLE
-        print("collapsed")
         return true
     }
 }
