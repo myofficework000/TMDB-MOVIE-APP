@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.UpcomingMovieItemBinding
 import com.example.tmdbmovieapp.model.local.data.Movie
-import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 
-class UpcomingRVAdapter(private val movieList: List<Movie>) : RecyclerView.Adapter<UpcomingRVAdapter.UpcomingViewHolder>(){
+class UpcomingRVAdapter(private val movieList: List<Movie>) :
+    RecyclerView.Adapter<UpcomingRVAdapter.UpcomingViewHolder>() {
 
     private lateinit var upcomingMovieItemBinding: UpcomingMovieItemBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: UpcomingMovieItemBinding =
+        upcomingMovieItemBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.upcoming_movie_item, parent, false)
-        return UpcomingViewHolder(binding)
+        return UpcomingViewHolder(upcomingMovieItemBinding)
     }
 
     override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
         holder.bind(movieList[position])
     }
 
-    inner class UpcomingViewHolder(binding: UpcomingMovieItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie:Movie) {
-            if (this@UpcomingRVAdapter::upcomingMovieItemBinding.isInitialized)
+    inner class UpcomingViewHolder(binding: UpcomingMovieItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(movie: Movie) {
             upcomingMovieItemBinding.movie = movie
         }
     }

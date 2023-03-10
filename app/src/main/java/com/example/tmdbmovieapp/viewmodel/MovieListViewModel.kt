@@ -5,12 +5,7 @@ import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
 import com.example.tmdbmovieapp.model.local.AppDatabase
-import com.example.tmdbmovieapp.model.local.data.Movie
-import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import com.example.tmdbmovieapp.model.repository.Repository
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MovieListViewModel(
     application: Application,
@@ -19,17 +14,12 @@ class MovieListViewModel(
 ) : AndroidViewModel(application), Observable {
     val latestMovie = repository.latestMovie
     val movieDetail = repository.movieDetail
-
-    val upComingMovies = repository.upComingmovie
-    fun getTopRatedMovies() {
-
-    }
-
-    fun getPopularMovies() {
-
-    }
+    val upComingMovies = repository.upComingMovie
+    val topRatedMovies = repository.topRatedMovie
 
     fun getUpcomingMovies() = upComingMovies.also { repository.getUpComingMovie() }
+
+    fun getTrendingMovies() = topRatedMovies.also { repository.getTopRatedMovie() }
 
     fun getLatestMovies() = latestMovie.also { repository.getLatestMovie() }
 

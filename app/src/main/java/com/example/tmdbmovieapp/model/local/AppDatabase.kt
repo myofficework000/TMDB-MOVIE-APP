@@ -21,7 +21,7 @@ import com.example.tmdbmovieapp.model.local.data.*
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getMovieDao(): MovieDao
-    abstract fun getUpComingMovieDao(): UpcomingMoiveDao
+    abstract fun getMoviesDao(): MoviesDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

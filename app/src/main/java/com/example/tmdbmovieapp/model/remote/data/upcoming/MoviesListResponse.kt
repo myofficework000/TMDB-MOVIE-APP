@@ -6,7 +6,7 @@ import com.example.tmdbmovieapp.model.remote.data.MovieResponse
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "UpcomingMovie")
-data class UpcomingResponse(
+data class MoviesListResponse(
     @SerializedName("id")
     @PrimaryKey
     val id: Int,

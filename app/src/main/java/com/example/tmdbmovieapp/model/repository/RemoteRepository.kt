@@ -13,4 +13,6 @@ class RemoteRepository(
     fun getLatestMovie() = apiLatestMovie.getLatestMovie()
     fun getMovieDetail(movieId: Int) = apiService.getMovieDetail(movieId)
     fun loadUpcomingMovies() = apiService.getUpComingMovies()
+
+    fun loadTopRatedMovies() = apiService.getTopRatedMovies()
 }

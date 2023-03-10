@@ -11,7 +11,11 @@ class LocalRepository(private val appDatabase: AppDatabase) {
 
     fun saveMovieDetail(data: List<MovieDetail>) = appDatabase.getMovieDao().saveMovieDetail(data)
     fun getMovieDetailById(movieId: Int) = appDatabase.getMovieDao().getMovieDetailById(movieId)
-    fun getUpComingMovies() = appDatabase.getUpComingMovieDao().getMovies()
+    fun getUpComingMovies() = appDatabase.getMoviesDao().getUpcomingMovies()
 
-    fun saveUpComingMovies(movies: List<Movie>) = appDatabase.getUpComingMovieDao().saveMovies(movies)
+    fun saveUpComingMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
+
+    fun getTopRatedMovies() = appDatabase.getMoviesDao().getTopRatedMovies()
+
+    fun saveTopRatedMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
 }

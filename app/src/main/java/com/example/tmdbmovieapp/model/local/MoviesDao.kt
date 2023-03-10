@@ -9,12 +9,15 @@ import com.example.tmdbmovieapp.model.local.data.Movie
 import com.example.tmdbmovieapp.model.remote.Constant
 
 @Dao
-interface UpcomingMoiveDao {
+interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun saveMovies(movies: List<Movie>) : List<Long>
+    fun saveMovies(movies: List<Movie>): List<Long>
 
     @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isUpcoming = 1")
-    fun getMovies(): LiveData<List<Movie>>
+    fun getUpcomingMovies(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isTopRated = 1")
+    fun getTopRatedMovies(): LiveData<List<Movie>>
 
 }

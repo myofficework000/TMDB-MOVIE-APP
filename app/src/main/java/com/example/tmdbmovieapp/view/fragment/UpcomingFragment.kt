@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
-import com.example.tmdbmovieapp.databinding.FragmentLatestBinding
 import com.example.tmdbmovieapp.databinding.FragmentUpcomingBinding
 import com.example.tmdbmovieapp.model.local.AppDatabase
-import com.example.tmdbmovieapp.model.local.UpcomingMoiveDao
-import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
+import com.example.tmdbmovieapp.model.local.MoviesDao
+import com.example.tmdbmovieapp.model.remote.data.upcoming.MoviesListResponse
 import com.example.tmdbmovieapp.view.adapters.UpcomingRVAdapter
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import com.example.tmdbmovieapp.viewmodel.createFactory
@@ -22,9 +20,9 @@ import com.example.tmdbmovieapp.viewmodel.createFactory
 class UpcomingFragment : Fragment() {
     private lateinit var binding: FragmentUpcomingBinding
     private lateinit var db: AppDatabase
-    private lateinit var movieDao: UpcomingMoiveDao
+    private lateinit var movieDao: MoviesDao
     private lateinit var rvAdapter: UpcomingRVAdapter
-    private lateinit var movieList: List<UpcomingResponse>
+    private lateinit var movieList: List<MoviesListResponse>
 
     private val viewModel by lazy {
         requireActivity().run {
