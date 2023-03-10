@@ -1,8 +1,11 @@
 package com.example.tmdbmovieapp.model.remote
 
+import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_TOP_RATED_MOVIES
 import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
 import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_UPCOMING_MOVIES
+import com.example.tmdbmovieapp.model.remote.Constant.TOKEN_THOMAS
 import com.example.tmdbmovieapp.model.remote.data.MovieResponse
+import com.example.tmdbmovieapp.model.remote.data.trending.TrendingResponse
 import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -32,6 +35,10 @@ interface ApiService {
         @Query("page") page : Int? = null
     ): Call<UpcomingResponse>
 
-
+    @GET(END_POINT_TOP_RATED_MOVIES)
+    fun getTrendingMovies(
+        @Query("api_key") apiKey : String? = TOKEN_THOMAS,
+        @Query("page") page : Int? = null
+    ): Call<TrendingResponse>
 
 }

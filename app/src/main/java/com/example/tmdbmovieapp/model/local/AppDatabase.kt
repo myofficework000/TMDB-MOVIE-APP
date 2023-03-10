@@ -23,6 +23,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getMovieDao(): MovieDao
     abstract fun getUpComingMovieDao(): UpcomingMoiveDao
 
+    abstract fun getTrendingMovieDao(): TrendingMovieDao
+
     companion object {
         private var INSTANCE: AppDatabase? = null
 

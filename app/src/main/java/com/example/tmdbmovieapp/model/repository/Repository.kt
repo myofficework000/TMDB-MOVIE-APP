@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
 import com.example.tmdbmovieapp.model.remote.data.MovieResponse
+import com.example.tmdbmovieapp.model.remote.data.trending.TrendingMovie
 import com.example.tmdbmovieapp.model.remote.data.upcoming.UpcomingResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,7 +69,10 @@ class Repository(
         })
     }
 
-
+    override fun getTrendingMovie(): LiveData<List<TrendingMovie>> {
+        updateTrendingMovie()
+        return localRepository.getTrendingMovie()
+    }
     
 
 }
