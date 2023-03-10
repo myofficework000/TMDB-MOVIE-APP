@@ -31,7 +31,7 @@ object RetrofitBuilder {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             .client(
                 OkHttpClient.Builder()
-                    .addInterceptor(OkHttpInterceptors.APIKey(TOKEN_JOSH))
+                    .addInterceptor(OkHttpInterceptors.APIKey(TOKEN_ALEX))
                     .addInterceptor(loggingInterceptor)
                     .build()
             )

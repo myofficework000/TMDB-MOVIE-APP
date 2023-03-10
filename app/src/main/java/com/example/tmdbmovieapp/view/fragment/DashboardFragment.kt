@@ -32,6 +32,8 @@ class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
         savedInstanceState: Bundle?
     ): View = FragmentDashboardBinding.inflate(inflater, container, false).apply {
         dashboardFragment = this@DashboardFragment
+        binding = this
+        setHasOptionsMenu(true)
     }.root
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -46,9 +48,7 @@ class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
             if (it == null) return@observe
             binding.recyclerViewSearchResult.layoutManager = LinearLayoutManager(context)
             if (it.isNotEmpty()) {
-                binding.recyclerViewSearchResult.visibility = View.VISIBLE
                 binding.recyclerViewSearchResult.adapter = UpcomingRVAdapter(it)
-                binding.layoutTabs.visibility = View.GONE
             }
         }
     }
@@ -96,10 +96,16 @@ class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
     }
 
     override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+
+        binding.recyclerViewSearchResult.visibility = View.VISIBLE
+        binding.layoutTabs.visibility = View.GONE
         return true
     }
 
     override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+        binding.recyclerViewSearchResult.visibility = View.GONE
+        binding.layoutTabs.visibility = View.VISIBLE
+        print("collapsed")
         return true
     }
 }

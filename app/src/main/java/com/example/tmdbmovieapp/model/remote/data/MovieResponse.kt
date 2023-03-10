@@ -35,22 +35,24 @@ data class MovieResponse(
     val voteAverage: Double
 
 ) {
-    fun toLocal(isUpcoming: Boolean = false, isTopRated: Boolean = false, isSearch:Boolean) = Movie(
-        adult = adult,
-        backdropPath = backdropPath,
-        genreIds = genreIds ?: listOf(),
-        id = id,
-        originalLanguage = originalLanguage,
-        originalTitle = originalTitle,
-        overview = overview,
-        popularity = popularity,
-        posterPath = posterPath,
-        releaseDate = releaseDate,
-        title = title,
-        video = video,
-        voteAverage = voteAverage,
-        voteCount = voteCount,
-        isUpcoming = isUpcoming,
-        isTopRated = isTopRated
-    )
+    fun toLocal(isUpcoming: Boolean = false, isTopRated: Boolean = false, isSearch: Boolean) =
+        Movie(
+            adult = adult,
+            backdropPath = backdropPath,
+            genreIds = genreIds ?: listOf(),
+            id = id,
+            originalLanguage = originalLanguage,
+            originalTitle = originalTitle,
+            overview = overview,
+            popularity = popularity,
+            posterPath = posterPath,
+            releaseDate = releaseDate,
+            title = title,
+            video = video,
+            voteAverage = voteAverage,
+            voteCount = voteCount,
+            isUpcoming = isUpcoming,
+            isTopRated = isTopRated,
+            isSearched = isSearch
+        )
 }

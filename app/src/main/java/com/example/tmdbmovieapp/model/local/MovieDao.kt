@@ -38,5 +38,4 @@ interface MovieDao {
     fun getSpokenLanguageById(languageIso: Int): List<SpokenLanguage>
     @Query("SELECT * FROM Movie")
     fun getNews(): LiveData<List<Movie>>
-
 }
