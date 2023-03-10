@@ -8,42 +8,27 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object RetrofitBuilder {
 
-    private lateinit var retrofit: Retrofit
-    private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
-
-    fun getRetrofit(apiKey: String): Retrofit {
-        if (!this::retrofit.isInitialized) {
-
-            val loggingInterceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(OkHttpInterceptors.APIKey(apiKey))
-                .addInterceptor(loggingInterceptor)
-                .build()
-
-            retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
+    val instanceLatestMovie: ApiService by lazy {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
         }
 
-        return retrofit
-    }
+        val client = OkHttpClient.Builder()
+            .addInterceptor(OkHttpInterceptors.APIKey(TOKEN_ALEX))
+            .addInterceptor(loggingInterceptor)
+            .build()
 
-    val instanceLatestMovie: ApiLatestMovie by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(OkHttpInterceptors.APIKey(TOKEN_JOSH))
@@ -51,6 +36,6 @@ object RetrofitBuilder {
                     .build()
             )
             .build()
-            .create(ApiLatestMovie::class.java)
+            .create(ApiService::class.java)
     }
 }

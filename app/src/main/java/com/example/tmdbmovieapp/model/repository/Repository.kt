@@ -1,14 +1,14 @@
 package com.example.tmdbmovieapp.model.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tmdbmovieapp.model.local.AppDatabase
-import com.example.tmdbmovieapp.model.remote.data.MovieDetailResponse
 import com.example.tmdbmovieapp.model.remote.data.MovieResponse
-import com.example.tmdbmovieapp.model.remote.data.upcoming.MoviesListResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class Repository(
     private val appDatabase: AppDatabase,
@@ -20,73 +20,76 @@ class Repository(
     val movieDetail = localRepository.getMovieDetailById(-1)
     val upComingMovie = localRepository.getUpComingMovies()
     val topRatedMovie = localRepository.getTopRatedMovies()
+    var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun getMovieDetail(movieId: Int) {
-        remoteRepository.getMovieDetail(movieId).enqueue(object : Callback<MovieDetailResponse> {
-            override fun onResponse(
-                call: Call<MovieDetailResponse>,
-                response: Response<MovieDetailResponse>
-            ) {
-                response.body()?.let {
-                    localRepository.saveMovieDetail(
-                        listOf(it.toLocal(appDatabase.getMovieDao()))
-                    )
-                }
-            }
+        val disposable = remoteRepository.getMovieDetail(movieId)
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                localRepository.saveMovieDetail(
+                    listOf(res.toLocal(appDatabase.getMovieDao()))
+                )
+            }, {
+                Log.i("error", it.message.toString())
+            })
 
-            override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {}
-        })
+        compositeDisposable.add(disposable)
     }
 
     override fun getLatestMovie() {
-        remoteRepository.getLatestMovie().enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                response.body()?.let { _latestMovie.value = it }
-            }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {}
-        })
+        val disposable = remoteRepository.getLatestMovie()
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                _latestMovie.postValue(res)
+            }, {
+                Log.i("error", it.message.toString())
+            })
+
+        compositeDisposable.add(disposable)
     }
 
     override val isProcessing = MutableLiveData<Boolean>()
 
     //override fun getUpComingMovie() = remoteRepository.loadUpcomingMovies()
     override fun getUpComingMovie() {
-        remoteRepository.loadUpcomingMovies().enqueue(object : Callback<MoviesListResponse> {
-            override fun onResponse(
-                call: Call<MoviesListResponse>,
-                response: Response<MoviesListResponse>
-            ) {
-                response.body()?.let {
-                    localRepository.saveUpComingMovies(
-                        (it.results.map { result ->
-                            result.toLocal(isUpcoming = true, isTopRated = false)
-                        })
-                    )
-                }
+        val disposable = remoteRepository.loadUpcomingMovies()
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                localRepository.saveUpComingMovies(
+                    (res.results.map { result ->
+                        result.toLocal(isUpcoming = true, isTopRated = false)
+                    })
+                )
+            }, {
+                Log.i("error", it.message.toString())
             }
+            )
 
-            override fun onFailure(call: Call<MoviesListResponse>, t: Throwable) {}
-        })
+        compositeDisposable.add(disposable)
     }
 
 
     override fun getTopRatedMovie() {
-        remoteRepository.loadTopRatedMovies().enqueue(object : Callback<MoviesListResponse> {
-            override fun onResponse(
-                call: Call<MoviesListResponse>,
-                response: Response<MoviesListResponse>
-            ) {
-                response.body()?.let {
-                    localRepository.saveTopRatedMovies(
-                        (it.results.map { result ->
-                            result.toLocal(isUpcoming = false, isTopRated = true)
-                        })
-                    )
-                }
+        val disposable = remoteRepository.loadTopRatedMovies()
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                localRepository.saveTopRatedMovies(
+                    (res.results.map { result ->
+                        result.toLocal(isUpcoming = false, isTopRated = true)
+                    })
+                )
+            }, {
+                Log.i("error", it.message.toString())
             }
+            )
 
-            override fun onFailure(call: Call<MoviesListResponse>, t: Throwable) {}
-        })
+        compositeDisposable.add(disposable)
     }
+
+
 }

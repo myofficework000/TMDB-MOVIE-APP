@@ -36,4 +36,9 @@ class MovieListViewModel(
     fun notifyChange() {
         callbacks.notifyCallbacks(this, 0, null)
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.compositeDisposable.dispose()
+    }
 }
