@@ -5,7 +5,9 @@ import android.os.Bundle
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.ActivityMainBinding
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

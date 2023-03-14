@@ -5,27 +5,22 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.FragmentDashboardBinding
 import com.example.tmdbmovieapp.view.adapters.UpcomingRVAdapter
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
-import com.example.tmdbmovieapp.viewmodel.createFactory
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
+@AndroidEntryPoint
 class DashboardFragment : Fragment(), MenuItem.OnActionExpandListener {
 
     private lateinit var binding: FragmentDashboardBinding
-    private val viewModel by lazy {
-        requireActivity().run {
-            ViewModelProvider(
-                requireActivity(), MovieListViewModel(application).createFactory()
-            )[MovieListViewModel::class.java]
-        }
-    }
+    private val viewModel by viewModels<MovieListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
