@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
-import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,11 +17,14 @@ class MovieListViewModel @Inject constructor(
     val movieDetail = repository.movieDetail
     val upComingMovies = repository.upComingMovie
     val topRatedMovies = repository.topRatedMovie
+    val popularMovieData = repository.popularMovieData
     val searchedMovieLiveData = repository.searchedMovies
 
     fun getUpcomingMovies() = upComingMovies.also { repository.getUpComingMovie() }
 
     fun getTrendingMovies() = topRatedMovies.also { repository.getTopRatedMovie() }
+
+    fun getPopularMovies() = popularMovieData.also { repository.getPopularMovie() }
 
     fun getLatestMovies() = latestMovie.also { repository.getLatestMovie() }
 
@@ -46,6 +48,6 @@ class MovieListViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        repository.compositeDisposable.dispose()
+        repository.onCleared()
     }
 }

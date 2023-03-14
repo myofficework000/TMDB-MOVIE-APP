@@ -21,6 +21,9 @@ interface MoviesDao {
     @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isTopRated = 1")
     fun getTopRatedMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isPopular = 1")
+    fun getPopularMovies(): LiveData<List<Movie>>
+
     @Query("SELECT * FROM ${Constant.TABLE_MOVIE} WHERE isSearched = 1")
     fun getSearchedMovies(): LiveData<List<Movie>>
 

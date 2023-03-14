@@ -19,6 +19,7 @@ class RemoteRepository @Inject constructor(
     override fun loadUpcomingMovies() = apiService.getUpComingMovies()
 
     override fun loadTopRatedMovies() = apiService.getTopRatedMovies()
+    override fun loadPopularMovies() = apiService.getPopularMovies()
 
     override fun searchMovie(searchText: String) = apiService.getMovieSearch(searchText)
 }
@@ -28,5 +29,6 @@ interface IRemoteRepository {
     fun getMovieDetail(movieId: Int): Single<MovieDetailResponse>
     fun loadUpcomingMovies(): Single<MoviesListResponse>
     fun loadTopRatedMovies(): Single<MoviesListResponse>
+    fun loadPopularMovies(): Single<MoviesListResponse>
     fun searchMovie(searchText: String): Single<MoviesListResponse>
 }

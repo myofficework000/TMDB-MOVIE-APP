@@ -4,7 +4,13 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.MenuItem
 import androidx.annotation.ColorRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.tmdbmovieapp.R
+import com.example.tmdbmovieapp.view.fragment.DetailFragment
 
 object UiUtils {
 
@@ -20,5 +26,12 @@ object UiUtils {
     fun dipToPixels(context: Context, dipValue: Float): Float {
         val metrics = context.resources.displayMetrics
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics)
+    }
+
+    fun AppCompatActivity.replaceFragment(containerId: Int, fragment: Fragment) {
+        supportFragmentManager.inTransaction { replace(containerId, fragment) }
+    }
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+        beginTransaction().func().commit()
     }
 }

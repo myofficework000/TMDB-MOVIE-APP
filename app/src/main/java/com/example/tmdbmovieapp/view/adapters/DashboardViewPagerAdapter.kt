@@ -13,19 +13,17 @@ class DashboardViewPagerAdapter(
     override fun getItemCount(): Int = pageNames.size
 
     override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> LatestFragment()
-        1 -> UpcomingFragment()
-        2 -> TrendingFragment()
-        3 -> PopularFragment()
-        else -> LatestFragment()
+        0 -> UpcomingFragment()
+        1 -> TrendingFragment()
+        2 -> PopularFragment()
+        else -> UpcomingFragment()
     }
 
     companion object {
         val pageNames = listOf(
-            "Latest Movies",
-            "Uncoming Movies",
-            "Trending Movies",
-            "Popular Movies"
+            "Uncoming",
+            "Trending",
+            "Popular"
         )
     }
 }

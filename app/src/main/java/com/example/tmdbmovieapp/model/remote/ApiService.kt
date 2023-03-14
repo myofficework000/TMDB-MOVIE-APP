@@ -1,6 +1,7 @@
 package com.example.tmdbmovieapp.model.remote
 
 import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_LATEST_MOVIES
+import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_POPULAR_MOVIES
 import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_SEARCH
 import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_TOP_RATED_MOVIES
 import com.example.tmdbmovieapp.model.remote.Constant.END_POINT_UPCOMING_MOVIES
@@ -25,6 +26,12 @@ interface ApiService {
 
     @GET(END_POINT_TOP_RATED_MOVIES)
     fun getTopRatedMovies(
+        @Query("country") country: String? = null,
+        @Query("page") page: Int? = null
+    ): Single<MoviesListResponse>
+
+    @GET(END_POINT_POPULAR_MOVIES)
+    fun getPopularMovies(
         @Query("country") country: String? = null,
         @Query("page") page: Int? = null
     ): Single<MoviesListResponse>

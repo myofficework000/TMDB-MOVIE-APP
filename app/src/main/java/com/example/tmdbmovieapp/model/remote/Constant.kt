@@ -11,7 +11,7 @@ object Constant {
     const val TOKEN_THOMAS = ""
     const val TOKEN_LUAN = ""
     const val END_POINT_LATEST_MOVIES = "movie/latest"
-    const val END_POINT_POPULAR_MOVIES = ""
+    const val END_POINT_POPULAR_MOVIES = "movie/popular"
     const val END_POINT_UPCOMING_MOVIES = "movie/upcoming"
     const val END_POINT_TOP_RATED_MOVIES = "movie/top_rated"
     const val END_POINT_MOVIE_DETAIL = "movie/{movie_id}"
