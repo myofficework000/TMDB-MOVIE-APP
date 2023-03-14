@@ -6,11 +6,13 @@ import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.AndroidViewModel
 import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.repository.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MovieListViewModel(
+@HiltViewModel
+class MovieListViewModel @Inject constructor(
     application: Application,
-    private val db: AppDatabase = AppDatabase.getInstance(application),
-    private val repository: Repository = Repository(db)
+    private val repository: Repository
 ) : AndroidViewModel(application), Observable {
     val latestMovie = repository.latestMovie
     val movieDetail = repository.movieDetail

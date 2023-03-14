@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
@@ -16,7 +17,9 @@ import com.example.tmdbmovieapp.model.remote.data.upcoming.MoviesListResponse
 import com.example.tmdbmovieapp.view.adapters.UpcomingRVAdapter
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import com.example.tmdbmovieapp.viewmodel.createFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrendingFragment : Fragment() {
     private lateinit var binding: FragmentTrendingBinding
     private lateinit var db: AppDatabase
@@ -24,13 +27,7 @@ class TrendingFragment : Fragment() {
     private lateinit var rvAdapter: UpcomingRVAdapter
     private lateinit var movieList: List<MoviesListResponse>
 
-    private val viewModel by lazy {
-        requireActivity().run {
-            ViewModelProvider(
-                requireActivity(), MovieListViewModel(application).createFactory()
-            )[MovieListViewModel::class.java]
-        }
-    }
+    private val viewModel by viewModels<MovieListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

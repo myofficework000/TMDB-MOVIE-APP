@@ -7,20 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.FragmentLatestBinding
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import com.example.tmdbmovieapp.viewmodel.createFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LatestFragment : Fragment() {
-    private val viewModel by lazy {
-        requireActivity().run {
-            ViewModelProvider(
-                requireActivity(), MovieListViewModel(application).createFactory()
-            )[MovieListViewModel::class.java]
-        }
-    }
+    private val viewModel by viewModels<MovieListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

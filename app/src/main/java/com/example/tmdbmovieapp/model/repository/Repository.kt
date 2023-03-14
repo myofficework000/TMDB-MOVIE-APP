@@ -8,11 +8,12 @@ import com.example.tmdbmovieapp.model.remote.data.MovieResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class Repository(
+class Repository @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val localRepository: LocalRepository = LocalRepository(appDatabase),
-    private val remoteRepository: RemoteRepository = RemoteRepository()
+    private val localRepository: LocalRepository,
+    private val remoteRepository: RemoteRepository
 ) : IRepository {
     private val _latestMovie = MutableLiveData<MovieResponse>()
     val latestMovie: LiveData<MovieResponse> get() = _latestMovie
