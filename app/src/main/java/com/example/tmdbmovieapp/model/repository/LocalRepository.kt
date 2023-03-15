@@ -17,6 +17,8 @@ class LocalRepository @Inject constructor(
     override fun saveUpComingMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
     override fun getTopRatedMovies() = appDatabase.getMoviesDao().getTopRatedMovies()
     override fun saveTopRatedMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
+    override fun getPopularMovies() = appDatabase.getMoviesDao().getPopularMovies()
+    override fun savePopularMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
     override fun getSearchMovies() = appDatabase.getMoviesDao().getSearchedMovies()
     override fun saveAsSearchMovies(movies: List<Movie>) = appDatabase.getMoviesDao().saveMovies(movies)
     override fun deleteSearchedMovies(ids: LongArray) = appDatabase.getMoviesDao().deleteSearchedMovies(ids)
@@ -31,6 +33,8 @@ interface ILocalRepository {
     fun saveUpComingMovies(movies: List<Movie>): List<Long>
     fun getTopRatedMovies(): LiveData<List<Movie>>
     fun saveTopRatedMovies(movies: List<Movie>): List<Long>
+    fun getPopularMovies(): LiveData<List<Movie>>
+    fun savePopularMovies(movies: List<Movie>): List<Long>
     fun getSearchMovies(): LiveData<List<Movie>>
     fun saveAsSearchMovies(movies: List<Movie>): List<Long>
     fun deleteSearchedMovies(ids: LongArray)

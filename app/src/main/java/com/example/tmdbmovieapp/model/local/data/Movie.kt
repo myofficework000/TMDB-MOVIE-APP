@@ -23,5 +23,6 @@ data class Movie(
     val voteCount: Int,
     val isUpcoming: Boolean? = false,
     val isTopRated: Boolean? = false,
+    val isPopular: Boolean? = false,
     val isSearched: Boolean? = false
 )

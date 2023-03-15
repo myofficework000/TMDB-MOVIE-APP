@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,6 +16,8 @@ import com.example.tmdbmovieapp.model.local.AppDatabase
 import com.example.tmdbmovieapp.model.local.MoviesDao
 import com.example.tmdbmovieapp.model.remote.data.upcoming.MoviesListResponse
 import com.example.tmdbmovieapp.view.adapters.UpcomingRVAdapter
+import com.example.tmdbmovieapp.view.util.UiUtils
+import com.example.tmdbmovieapp.view.util.UiUtils.replaceFragment
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import com.example.tmdbmovieapp.viewmodel.createFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,12 +48,12 @@ class TrendingFragment : Fragment() {
 
         viewModel.topRatedMovies.observe(viewLifecycleOwner) {
             if (it == null) return@observe
-            binding.rvUpMovies.adapter = UpcomingRVAdapter(it)
+            binding.rvUpMovies.adapter = UpcomingRVAdapter(it) { movie ->
+                (requireActivity() as AppCompatActivity).replaceFragment(
+                    R.id.dashboardFragment, DetailFragment(movie.id)
+                )
+            }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.getTrendingMovies()
     }
 }

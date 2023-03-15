@@ -20,8 +20,9 @@ class Repository @Inject constructor(
     val movieDetail = localRepository.getMovieDetailById(-1)
     val upComingMovie = localRepository.getUpComingMovies()
     val topRatedMovie = localRepository.getTopRatedMovies()
+    val popularMovieData = localRepository.getPopularMovies()
     val searchedMovies = localRepository.getSearchMovies()
-    var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun getMovieDetail(movieId: Int) {
         val disposable = remoteRepository.getMovieDetail(movieId)
@@ -62,7 +63,7 @@ class Repository @Inject constructor(
             .subscribe({ res ->
                 localRepository.saveUpComingMovies(
                     (res.results.map { result ->
-                        result.toLocal(isUpcoming = true, isTopRated = false, isSearch = false)
+                        result.toLocal(isUpcoming = true)
                     })
                 )
             }, {
@@ -81,7 +82,25 @@ class Repository @Inject constructor(
             .subscribe({ res ->
                 localRepository.saveTopRatedMovies(
                     (res.results.map { result ->
-                        result.toLocal(isUpcoming = false, isTopRated = true, isSearch = false)
+                        result.toLocal(isTopRated = true)
+                    })
+                )
+            }, {
+                Log.i("error", it.message.toString())
+            }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    override fun getPopularMovie() {
+        val disposable = remoteRepository.loadPopularMovies()
+            .observeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                localRepository.savePopularMovies(
+                    (res.results.map { result ->
+                        result.toLocal(isPopular = true)
                     })
                 )
             }, {
@@ -99,7 +118,7 @@ class Repository @Inject constructor(
             .subscribe({ res ->
                 localRepository.saveAsSearchMovies(
                     (res.results.map { result ->
-                        result.toLocal(isUpcoming = false, isTopRated = false, isSearch = true)
+                        result.toLocal(isSearch = true)
                     })
                 )
             }, {
@@ -110,4 +129,7 @@ class Repository @Inject constructor(
         compositeDisposable.add(disposable)
     }
 
+    override fun onCleared() {
+        compositeDisposable.dispose()
+    }
 }
