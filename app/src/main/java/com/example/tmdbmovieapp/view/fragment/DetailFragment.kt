@@ -12,12 +12,12 @@ import com.example.tmdbmovieapp.databinding.FragmentPopularBinding
 import com.example.tmdbmovieapp.databinding.MovieDetailFragmentBinding
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class DetailFragment(
     private val movieId: Int
 ): Fragment() {
     private val viewModel by viewModels<MovieListViewModel>()
+    private lateinit var binding: MovieDetailFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +26,7 @@ class DetailFragment(
     ): View = DataBindingUtil.inflate<MovieDetailFragmentBinding>(
         inflater, R.layout.movie_detail_fragment, container, false
     ).apply {
-
+        binding = this
     }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.FragmentUpcomingBinding
@@ -20,7 +21,6 @@ import com.example.tmdbmovieapp.view.util.UiUtils
 import com.example.tmdbmovieapp.view.util.UiUtils.replaceFragment
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class UpcomingFragment : Fragment() {
     private lateinit var binding: FragmentUpcomingBinding
@@ -48,9 +48,10 @@ class UpcomingFragment : Fragment() {
         viewModel.upComingMovies.observe(viewLifecycleOwner) {
             if (it == null) return@observe
             binding.rvUpMovies.adapter = UpcomingRVAdapter(it) { movie ->
-                (requireActivity() as AppCompatActivity).replaceFragment(
+                findNavController().navigate(R.id.movie_details)
+                /*(requireActivity() as AppCompatActivity).replaceFragment(
                     R.id.dashboardFragment, DetailFragment(movie.id)
-                )
+                )*/
             }
         }
         viewModel.getUpcomingMovies()

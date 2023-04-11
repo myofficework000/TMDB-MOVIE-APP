@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tmdbmovieapp.R
 import com.example.tmdbmovieapp.databinding.FragmentPopularBinding
@@ -20,7 +21,6 @@ import com.example.tmdbmovieapp.view.util.UiUtils
 import com.example.tmdbmovieapp.view.util.UiUtils.replaceFragment
 import com.example.tmdbmovieapp.viewmodel.MovieListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
@@ -48,9 +48,10 @@ class PopularFragment : Fragment() {
         viewModel.popularMovieData.observe(viewLifecycleOwner) {
             if (it == null) return@observe
             binding.rvPopularMovies.adapter = UpcomingRVAdapter(it) { movie ->
-                (requireActivity() as AppCompatActivity).replaceFragment(
+                findNavController().navigate(R.id.action_popularFragment_to_detailFragment)
+                /*(requireActivity() as AppCompatActivity).replaceFragment(
                     R.id.dashboardFragment, DetailFragment(movie.id)
-                )
+                )*/
             }
         }
 

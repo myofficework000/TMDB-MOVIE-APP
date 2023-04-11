@@ -25,13 +25,13 @@ class CommonBindingAdapters {
                 .into(imageView)
         }
 
-        @JvmStatic
+        /*@JvmStatic
         @BindingAdapter("setupWithTab", "fragment")
         fun setViewPagerAdapter(viewPager: ViewPager2, tabLayout: TabLayout, fragment: Fragment) {
             viewPager.adapter = DashboardViewPagerAdapter(fragment)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = DashboardViewPagerAdapter.pageNames[position]
             }.attach()
-        }
+        }*/
     }
 }

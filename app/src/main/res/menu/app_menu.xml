@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popular"
+        android:title="popular"
+        android:icon="@drawable/baseline_movie_filter_24"/>
+    <item
+        android:id="@+id/trending"
+        android:title="trending"
+        android:icon="@drawable/baseline_movie_24"/>
+    <item
+        android:id="@+id/upcomming"
+        android:title="upcoming"
+        android:icon="@drawable/baseline_local_movies_24"/>
+</menu>
